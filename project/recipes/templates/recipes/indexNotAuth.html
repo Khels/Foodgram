@@ -1,0 +1,34 @@
+{% extends "recipes/base.html" %}
+{% load static %}
+{% block title %}Рецепты{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
+{% endblock css %}
+{% block header %}
+    {% include "recipes/includes/navbar.html" %}
+{% endblock header %}
+{% block content %}
+
+    {% for recipe in recipes %}
+        {% include "recipes/includes/recipeElem.html" with recipe=recipe %}
+    {% endfor %}
+
+    {% if page.has_other_pages %}
+        {% include "recipes/includes/pagination.html" with items=page paginator=paginator %}
+    {% endif %}
+
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/CardList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'js/template/indexNotAuth.js' %}"></script>
+    <script src="{% static 'js/template/indexAuth.js' %}"></script>
+{% endblock js %}
