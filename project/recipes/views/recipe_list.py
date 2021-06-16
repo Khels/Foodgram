@@ -12,7 +12,7 @@ class RecipeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(RecipeListView, self).get_context_data(**kwargs)
-        recipes = self.get_queryset()
+        recipes = self.get_queryset().prefetch_related('tags').all()
         page = self.request.GET.get('page')
         paginator = Paginator(recipes, self.paginate_by)
         try:

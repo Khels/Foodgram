@@ -7,6 +7,7 @@
 {% block header %}
     {% include "recipes/includes/navbar.html" %}
 {% endblock header %}
+{% block tags %}{% include 'recipes/includes/tags.html' %}{% endblock %}
 {% block content %}
 
     {% for recipe in recipes %}

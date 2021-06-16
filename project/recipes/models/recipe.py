@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from pytils.translit import slugify
 
 
 class Recipe(models.Model):
@@ -40,6 +40,7 @@ class Recipe(models.Model):
     )
     tags = models.ManyToManyField(
         'recipes.Tag',
+        related_name='recipes',
     )
     cooking_time = models.IntegerField(
         validators=[
@@ -49,8 +50,8 @@ class Recipe(models.Model):
     )
     slug = models.SlugField(
         max_length=200,
-        unique=True,
-        default='slug',
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
