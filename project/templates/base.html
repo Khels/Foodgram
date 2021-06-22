@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-      Foodgram | {% block title %}{% endblock %}
+      {% block title %}{% endblock %} | Foodgram
     </title>
     {% block css %}{% endblock %}
   </head>
@@ -16,12 +15,15 @@
       {% block header %}{% endblock %}
     </header>
     <main class="main container">
-      {% block tags %}{% endblock %}
+      <div class="main__header">
+        <h1 class="main__title">{% block main_title %}{% endblock %}</h1>
+        {% block tags %}{% endblock %}
+      </div>
       <div class="card-list">
         {% block content %}{% endblock %}
       </div>
     </main>
-    {% include 'about/includes/footer.html' %}
+    {% include 'includes/footer.html' %}
     {% block js %}{% endblock %}
   </body>
 </html>

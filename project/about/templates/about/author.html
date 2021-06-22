@@ -1,8 +1,17 @@
-{% extends "about/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}Об авторе проекта{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/__brand/footer__brand.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/__container/footer__container.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/__item/footer__item.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/__items/footer__items.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/footer/__link/footer__link.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/link/link.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blocks/container/container.css' %}">
 {% endblock %}
 {% block content %}
     <main role="main" class="container">

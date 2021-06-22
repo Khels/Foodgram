@@ -1,17 +1,17 @@
 from django.views.generic import ListView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from ..models import Recipe
+from ..models import Follow
 
 
-class RecipeListView(ListView):
-    model = Recipe
-    template_name = 'recipes/index.html'
+class SubscriptionListView(ListView):
+    model = Follow
+    template_name = 'recipes/myFollow.html'
     context_object_name = 'recipes'
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
-        context = super(RecipeListView, self).get_context_data(**kwargs)
+        context = super(SubscriptionListView, self).get_context_data(**kwargs)
         recipes = self.get_queryset().prefetch_related('tags').all()
         page = self.request.GET.get('page')
         paginator = Paginator(recipes, self.paginate_by)

@@ -6,16 +6,16 @@ class Ingredient(models.Model):
     class Meta:
         verbose_name_plural = _('ingredients')
         verbose_name = _('ingredient')
-        ordering = ['name']
+        ordering = ['title']
 
-    name = models.CharField(
+    title = models.CharField(
         _('Название'),
         max_length=200
     )
-    measurement_unit = models.CharField(
+    dimension = models.CharField(
         _('Единицы измерения'),
         max_length=200
     )
 
     def __str__(self):
-        return self.name
+        return self.title

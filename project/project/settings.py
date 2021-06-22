@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'recipes',
     'about',
     'api',
+    'rest_framework',
+    'sorl.thumbnail',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -104,13 +107,24 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = (
-    BASE_DIR / 'recipes/static/',
+    BASE_DIR / 'static',
 )
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

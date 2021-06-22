@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}О технологиях{% endblock %}
+{% block title %}Ошибка 404{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -14,39 +14,15 @@
     <link rel="stylesheet" href="{% static 'css/blocks/container/container.css' %}">
 {% endblock %}
 {% block content %}
-  <main role="main" class="container">
-      <div class="row">
-          <div class="col-md-3 mb-3 mt-1">
-              <div class="card">
-                  <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                          <li class="list-group-item">
-                              <div class="h3">
-                                  Технологии
-                              </div>
-                          </li>
-                          <li class="list-group-item">
-                              <div class="h6 text-muted">
-                                  Раскрою несколько секретиков.
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-9">
-              <div class="card-body">
-                  <div class="card-text">
-                      <p>
-                          Вебсайт <span style="color:red">Food</span>gram написан на 
-                          <a href="https://www.djangoproject.com/">Django</a > — свободном фреймворке для 
-                          разработки веб-приложений на языке Python.
-                      </p>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </main>
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Ошибка 404</h1>
+                <p class="lead">Страница <code>{{ path }}</code> не найдена</p>
+                <p class="lead"><a href="{% url  'recipe_list' %}">Вернуться на главную</a></p>
+            </div>
+        </div>
+    </main>
 {% endblock %}
 {% block js %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

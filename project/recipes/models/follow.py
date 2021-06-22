@@ -12,13 +12,13 @@ class Follow(models.Model):
         ]
     author = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='subscribers',
         null=True,
     )
     subscriber = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='subscriptions',
         null=True,
     )

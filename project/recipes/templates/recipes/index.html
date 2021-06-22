@@ -1,21 +1,22 @@
-{% extends "recipes/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}Рецепты{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
 {% endblock css %}
 {% block header %}
-    {% include "recipes/includes/navbar.html" %}
+    {% include "includes/navbar.html" %}
 {% endblock header %}
-{% block tags %}{% include 'recipes/includes/tags.html' %}{% endblock %}
+{% block main_title %}Рецепты{% endblock %}
+{% block tags %}{% include 'includes/tags.html' %}{% endblock %}
 {% block content %}
 
     {% for recipe in recipes %}
-        {% include "recipes/includes/recipeElem.html" with recipe=recipe %}
+        {% include "includes/recipeElem.html" with recipe=recipe %}
     {% endfor %}
 
     {% if page.has_other_pages %}
-        {% include "recipes/includes/pagination.html" with items=page paginator=paginator %}
+        {% include "includes/pagination.html" with items=page paginator=paginator %}
     {% endif %}
 
 {% endblock content %}
