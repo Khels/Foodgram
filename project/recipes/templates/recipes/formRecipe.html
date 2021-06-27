@@ -29,7 +29,7 @@
                         {% for tag in form.tags.field.choices.queryset.all %}
                             <div class="tags__item">
                                 <input type="checkbox" name="tags" value="{{ tag.slug }}" id="{{ tag.id }}"
-                                    {% if tag in form.instance.tag.all %}checked{% endif %}
+                                    {% if tag in tags %}checked{% endif %}
                                     class="tags__checkbox tags__checkbox_style_{{ tag.color }}">
                                 <label for="id_{{ tag.slug }}" class="tags__label">{{ tag.name }}</label>
                             </div>
@@ -50,7 +50,14 @@
                         <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                     </div>
                     <div class="form__field-group-ingredientes-container">
-
+                        {% for ingredient, amount in ingredients %}
+                            <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
+                                <span> {{ ingredient.title }} {{ amount }}{{ ingredient.dimension }}</span> <span class="form__field-item-delete"></span>
+                                <input id="nameIngredient_{{ forloop.counter }}" name="nameIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.title }}">
+                                <input id="valueIngredient_{{ forloop.counter }}" name="valueIngredient_{{ forloop.counter }}" type="hidden" value="{{ amount }}">
+                                <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.dimension }}">
+                            </div>
+                        {% endfor %}
                     </div>
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
                     <span class="form__error"></span>

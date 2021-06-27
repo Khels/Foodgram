@@ -2,26 +2,50 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from ..forms import RecipeForm
-from .. import views
+from .save_ingredients import save_ingredients
 
-# <QueryDict: {'csrfmiddlewaretoken': ['mveMepYbW5cGIrsqkpTY6oqvGE3P02FZieEzghZ75hJINRbPnkNhDq8Beh6VEHsN'],
-# 'name': ['Яичница'], 'breakfast': ['on'], 'nameIngredient_1': ['Яйцо'], 'valueIngredient_1': ['4'],
-# 'unitsIngredient_1': ['шт.'], 'cooking_time': ['7'], 'description': ['Найс']}>
+
+def get_tags_from_request(request):
+    from ..models import Tag
+    if request.method == 'POST':
+        tags = Tag.objects.filter(slug__in=dict(request.POST).get('tags')).all()
+        return tags
+    return []
+
+
+def get_ingredients_from_request(request):
+    from ..models import Ingredient
+    ingredients = []
+    for field, value in request.POST.items():
+        if field.find('nameIngredient_', 0) != -1:
+            _, ingredient_order = field.split('_')
+            amount = request.POST['valueIngredient_' + ingredient_order]
+            ingredient = Ingredient.objects.get(title=value)
+            ingredients.append((ingredient, amount))
+    return ingredients
 
 
 @login_required
 def recipe_create(request):
-    print('\n\n\n\n', request.POST, '\n\n\n\n')
+    '''
+    Render the page with recipe creation form and
+    save the passed ingredients separately.
+    '''
     form = RecipeForm(request.POST or None, request.FILES or None)
-    print(form.errors)
-    if not form.is_valid():
-        return render(
-            request,
-            'recipes/formRecipe.html',
-            {'form': form},
-        )
-    form.instance.author = request.user
-    recipe = form.save()
-    views.save_ingredients(request, recipe)
-    recipe.save()
-    return redirect('recipe_list')
+    if form.is_valid():
+        form.instance.author = request.user
+        recipe = form.save()
+        save_ingredients(request, recipe)
+        recipe.save()
+        return redirect('recipe_view', recipe_id=recipe.id, slug=recipe.slug)
+    print('\n\n\n\n', request.POST, '\n\n\n\n')
+    # if the form is invalid do not lose user's input
+    tags = get_tags_from_request(request)
+    print('\n\n\n\n', tags, '\n\n\n\n')
+    ingredients = get_ingredients_from_request(request)
+    print('\n\n\n\n', ingredients, '\n\n\n\n')
+    return render(
+        request,
+        'recipes/formRecipe.html',
+        {'form': form, 'tags': tags, 'ingredients': ingredients},
+    )

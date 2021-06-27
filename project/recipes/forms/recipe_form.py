@@ -1,14 +1,14 @@
 from django import forms
 
-from .. import models
+from ..models import Recipe, Tag
 
 
 class RecipeForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(queryset=models.Tag.objects.all(),
+    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(),
                                           to_field_name='slug')
 
     class Meta:
-        model = models.Recipe
+        model = Recipe
         fields = [
             'name',
             'image',
