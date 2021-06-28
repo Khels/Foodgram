@@ -1,25 +1,21 @@
-from django.views.generic import ListView
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
+from django.shortcuts import render
 
-from ..models import Recipe
+from ..models import Recipe, Tag
+from .helpers import get_checked_tags
 
 
-class RecipeListView(ListView):
-    model = Recipe
-    template_name = 'recipes/index.html'
-    context_object_name = 'recipes'
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(RecipeListView, self).get_context_data(**kwargs)
-        recipes = self.get_queryset().prefetch_related('tags').all()
-        page = self.request.GET.get('page')
-        paginator = Paginator(recipes, self.paginate_by)
-        try:
-            recipes = paginator.page(page)
-        except PageNotAnInteger:
-            recipes = paginator.page(1)
-        except EmptyPage:
-            recipes = paginator.page(paginator.num_pages)
-        context['recipes'] = recipes
-        return context
+def recipe_list(request):
+    tags = Tag.objects.all()
+    checked_tags = get_checked_tags(request.GET)
+    recipes = Recipe.objects.prefetch_related('tags').filter(
+        tags__in=checked_tags).distinct()
+    paginator = Paginator(recipes, 6)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(
+        request,
+        'recipes/index.html',
+        {'page': page, 'paginator': paginator,
+         'tags': tags, 'checked_tags': checked_tags}
+    )

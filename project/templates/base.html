@@ -22,6 +22,7 @@
       <div class="card-list">
         {% block content %}{% endblock %}
       </div>
+      {% block paginator %}{% endblock %}
     </main>
     {% include 'includes/footer.html' %}
     {% block js %}{% endblock %}

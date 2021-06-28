@@ -4,14 +4,6 @@ from django.db import models
 
 
 class RecipeIngredient(models.Model):
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['recipe', 'ingredient'],
-                name='unique_recipeingredient'
-            )
-        ]
-
     recipe = models.ForeignKey(
         'recipes.Recipe',
         on_delete=models.SET_NULL,
@@ -26,8 +18,23 @@ class RecipeIngredient(models.Model):
         null=True,
     )
     amount = models.IntegerField(
+        default=0,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(100000),
         ]
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['recipe', 'ingredient'],
+                name='unique_recipeingredient'
+            )
+        ]
+
+    def __str__(self):
+        return f'{self.recipe.name}, {self.ingredient.title}, {self.amount}'
+
+    def __repr__(self):
+        return str(self)

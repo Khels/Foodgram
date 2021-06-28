@@ -8,18 +8,17 @@
     {% include "includes/navbar.html" %}
 {% endblock header %}
 {% block main_title %}Рецепты{% endblock %}
-{% block tags %}{% include 'includes/tags.html' %}{% endblock %}
+{% block tags %}{% include 'includes/tags.html' with tags=tags checked_tags=checked_tags %}{% endblock %}
 {% block content %}
-
-    {% for recipe in recipes %}
+    {% for recipe in page %}
         {% include "includes/recipeElem.html" with recipe=recipe %}
     {% endfor %}
-
+{% endblock content %}
+{% block paginator %}
     {% if page.has_other_pages %}
         {% include "includes/pagination.html" with items=page paginator=paginator %}
     {% endif %}
-
-{% endblock content %}
+{% endblock paginator %}
 {% block js %}
     <script src="{% static 'js/components/MainCards.js' %}"></script>
 

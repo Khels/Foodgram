@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
 from ..models import Recipe, Follow
+from .helpers import check_slug
 
 
 def recipe_view(request, recipe_id, slug=None):
