@@ -1,34 +1,35 @@
+from re import sub
+
 from django import template
 
 register = template.Library()
 
 
-@register.simple_tag
-def choose_tag(request, tag):
+@register.simple_tag(takes_context=True)
+def choose_tag(context, tag):
     '''
     Append tag=<tag.slug> parameter to a URL if no such tag was already passed
     otherwise delete such tag parameter from URL.
     '''
+    request = context['request']
     if request.GET:
         if tag not in request.GET.getlist('tag'):
             return request.get_full_path() + f'&tag={tag}'
         else:
-            return request.get_full_path().replace(f'&tag={tag}', '')
+            result_url = sub(rf'[?&]tag={tag}', '', request.get_full_path())
+            if result_url.find('?') != -1:
+                return result_url
+            return sub('&', '?', result_url, count=1)
     return request.get_full_path() + f'?tag={tag}'
 
 
-@register.simple_tag
-def preserve_tags(request, page_number):
+@register.simple_tag(takes_context=True)
+def preserve_tags(context, page_number):
     '''
-    Given a request like this /?page=1&tags=lunch&tags=dinner
-    change the page number preserving other parameters however.
+    Given a request like this /?page=1&tags=lunch&tags=dinner return a URL
+    with page number changed preserving other parameters however.
     '''
-    if request.GET:
-        page_value = request.GET.get('page')
-        if not page_value:
-            return request.get_full_path().replace(
-                '?', f'?page={page_number}&')
-        else:
-            return request.get_full_path().replace(
-                f'page={page_value}', f'page={page_number}')
-    return request.get_full_path() + f'?page={page_number}'
+    request = context['request']
+    query_params = request.GET.copy()
+    query_params['page'] = page_number
+    return '?' + query_params.urlencode()
