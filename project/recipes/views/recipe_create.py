@@ -12,7 +12,8 @@ def recipe_create(request):
     Render the page with recipe creation form and
     save the passed ingredients separately.
     '''
-    form = RecipeForm(request.POST or None, request.FILES or None)
+    form = RecipeForm(
+        request.POST or None, request.FILES or None, author=request.user)
     if form.is_valid():
         form.instance.author = request.user
         recipe = form.save()

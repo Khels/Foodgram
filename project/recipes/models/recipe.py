@@ -6,15 +6,11 @@ from pytils.translit import slugify
 
 
 class Recipe(models.Model):
-    class Meta:
-        verbose_name_plural = _('recipes')
-        verbose_name = _('recipe')
-        ordering = ['-pub_date']
-
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='recipes',
+        verbose_name=_('Автор'),
     )
     name = models.CharField(
         _('Название'),
@@ -40,8 +36,10 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(
         'recipes.Tag',
         related_name='recipes',
+        verbose_name=_('Теги'),
     )
     cooking_time = models.IntegerField(
+        _('Время приготовления'),
         validators=[
             MinValueValidator(5),
             MaxValueValidator(400),
@@ -52,6 +50,17 @@ class Recipe(models.Model):
         blank=True,
         null=True,
     )
+
+    class Meta:
+        verbose_name_plural = _('recipes')
+        verbose_name = _('recipe')
+        ordering = ['-pub_date']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'name'],
+                name='unique_recipe',
+            )
+        ]
 
     def __str__(self):
         return f'{self.name}, {self.author}'

@@ -1,23 +1,23 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-# from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(
         'recipes.Recipe',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='recipe_ingredient',
-        null=True,
+        verbose_name=_('Рецепт'),
     )
     ingredient = models.ForeignKey(
         'recipes.Ingredient',
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='recipe_ingredient',
-        blank=True,
-        null=True,
+        verbose_name=_('Ингредиент'),
     )
     amount = models.IntegerField(
+        _('Количество'),
         default=0,
         validators=[
             MinValueValidator(1),
@@ -29,7 +29,7 @@ class RecipeIngredient(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['recipe', 'ingredient'],
-                name='unique_recipeingredient'
+                name='unique_recipeingredient',
             )
         ]
 
