@@ -1,3 +1,4 @@
+from api.serializers import FollowSerializer
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from recipes.models import Follow
@@ -11,8 +12,11 @@ class FollowView(APIView):
     def post(self, request):
         author_id = request.data.get('id')
         author = get_object_or_404(User, id=author_id)
-        Follow.objects.get_or_create(author=author, subscriber=request.user)
-        return Response({"success": True})
+        serializer = FollowSerializer(
+            data={'author': author, 'subscriber': request.user})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'success': True})
 
     def delete(self, request, id):
         author = get_object_or_404(User, id=id)

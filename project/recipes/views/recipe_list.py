@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
@@ -10,7 +11,7 @@ def recipe_list(request):
     checked_tags = get_checked_tags(request.GET)
     recipes = Recipe.objects.prefetch_related('tags').filter(
         tags__in=checked_tags).distinct()
-    paginator = Paginator(recipes, 6)
+    paginator = Paginator(recipes, settings.PAGINATE_BY)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.recipe_list, name='recipe_list'),
     path('', include('api.urls')),
+    path('users/<str:username>/', views.recipe_author, name='recipe_author'),
     path('recipes/<int:recipe_id>/', views.recipe_view, name='recipe_view'),
     path('recipes/<int:recipe_id>/<slug:slug>/',
          views.recipe_view, name='recipe_view'),

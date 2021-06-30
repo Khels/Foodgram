@@ -23,13 +23,7 @@
             </div>
             <ul class="single-card__items">
                 {% for tag in tags %}
-                    {% if tag.name == 'Обед' %}
-                        <li class="single-card__item"><span class="badge badge_style_green">Обед</span></li>
-                    {% elif tag.name == 'Завтрак' %}
-                        <li class="single-card__item"><span class="badge badge_style_orange">Завтрак</span></li>
-                    {% elif tag.name == 'Ужин' %}
-                        <li class="single-card__item"><span class="badge badge_style_purple">Ужин</span></li>
-                    {% endif %}
+                    <li class="single-card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span></li>
                 {% endfor %}
             </ul>
             <div class="single-card__items single-card__items_column">

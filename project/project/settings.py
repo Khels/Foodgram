@@ -84,6 +84,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
 LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
@@ -94,6 +98,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+PAGINATE_BY = 6
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

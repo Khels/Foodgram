@@ -1,4 +1,5 @@
 from .page_not_found import page_not_found
+from .recipe_author import recipe_author
 from .recipe_create import recipe_create
 from .recipe_delete import recipe_delete
 from .recipe_edit import recipe_edit
@@ -10,6 +11,7 @@ from .subscription_list import SubscriptionListView
 
 __all__ = [
     page_not_found,
+    recipe_author,
     recipe_create,
     recipe_delete,
     recipe_edit,

@@ -5,11 +5,6 @@ User = get_user_model()
 
 
 class Follow(models.Model):
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['author', 'subscriber'], name='unique_follow')
-        ]
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -22,3 +17,9 @@ class Follow(models.Model):
         related_name='subscriptions',
         null=True,
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'subscriber'], name='unique_follow')
+        ]
