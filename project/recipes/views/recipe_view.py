@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
-from ..models import Recipe, Follow
+from ..models import Recipe
 from .helpers import check_slug
 
 
@@ -13,10 +13,6 @@ def recipe_view(request, recipe_id, slug=None):
         return redirect('recipe_view', recipe_id=recipe_id, slug=recipe.slug)
     tags = recipe.tags.all()
     recipe_ingredient = recipe.recipe_ingredient.all()
-    is_subscribed = None
-    if request.user.is_authenticated:
-        is_subscribed = Follow.objects.filter(
-            author=recipe.author, subscriber=request.user).exists()
     return render(
         request,
         'recipes/singlePage.html',
@@ -25,6 +21,5 @@ def recipe_view(request, recipe_id, slug=None):
             'recipe': recipe,
             'tags': tags,
             'recipe_ingredient': recipe_ingredient,
-            'is_subscribed': is_subscribed,
         }
     )

@@ -21,8 +21,8 @@ class FollowView(APIView):
         serializer.save()
         return Response({'success': True})
 
-    def delete(self, request, id):
-        author = get_object_or_404(User, id=id)
+    def delete(self, request, author_id):
+        author = get_object_or_404(User, id=author_id)
         follow = get_object_or_404(
             Follow, author=author, subscriber=request.user)
         follow.delete()

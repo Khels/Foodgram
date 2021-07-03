@@ -1,3 +1,4 @@
+from .favorite_list import favorite_list
 from .page_not_found import page_not_found
 from .recipe_author import recipe_author
 from .recipe_create import recipe_create
@@ -10,6 +11,7 @@ from .server_error import server_error
 from .subscription_list import subscription_list
 
 __all__ = [
+    favorite_list,
     page_not_found,
     recipe_author,
     recipe_create,

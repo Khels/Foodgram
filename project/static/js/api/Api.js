@@ -89,7 +89,7 @@ class Api {
       })
   }
   addFavorites (id)  {
-    return fetch(`/favorites`, {
+    return fetch(`/api/v1/favorites/`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
@@ -104,7 +104,7 @@ class Api {
         })
   }
   removeFavorites (id) {
-    return fetch(`/favorites/${id}`, {
+    return fetch(`/api/v1/favorites/${id}/`, {
       method: 'DELETE',
       headers: this.headers,
     })

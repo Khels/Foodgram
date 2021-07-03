@@ -6,11 +6,6 @@ User = get_user_model()
 
 
 class Favorite(models.Model):
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'recipe'], name='unique_favorite')
-        ]
     user = ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -21,3 +16,12 @@ class Favorite(models.Model):
         on_delete=models.CASCADE,
         related_name='favorites',
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'], name='unique_favorite')
+        ]
+
+    def __str__(self):
+        return f'{self.user.username} likes {self.recipe.slug}'

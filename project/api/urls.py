@@ -1,5 +1,5 @@
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter, Route, SimpleRouter
+from rest_framework.routers import Route, SimpleRouter
 
 from . import views
 
@@ -27,5 +27,7 @@ custom_router.register(
 urlpatterns = [
     path('v1/', include(custom_router.urls)),
     path('v1/subscriptions/', views.FollowView.as_view()),
-    path('v1/subscriptions/<int:id>/', views.FollowView.as_view()),
+    path('v1/subscriptions/<int:author_id>/', views.FollowView.as_view()),
+    path('v1/favorites/', views.FavoriteView.as_view()),
+    path('v1/favorites/<int:recipe_id>/', views.FavoriteView.as_view()),
 ]

@@ -17,4 +17,5 @@ urlpatterns = [
          views.recipe_create, name='recipe_create'),
     path('subscriptions/',
          views.subscription_list, name='subscription_list'),
+    path('favorites/', views.favorite_list, name='favorite_list'),
 ]

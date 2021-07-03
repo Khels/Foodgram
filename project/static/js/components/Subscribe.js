@@ -7,9 +7,9 @@ class Subscribe {
         target.setAttribute('disabled', true)
         this.api.addSubscriptions(authorId)
             .then( e => {
-                target.innerHTML = this.config.default.text;
-                target.classList.remove(this.config.active.class);
-                target.classList.add(this.config.default.class);
+                target.innerHTML = this.config.active.text;
+                target.classList.remove(this.config.default.class);
+                target.classList.add(this.config.active.class);
                 target.removeAttribute(this.config.attr);
             })
             .catch( e => {
@@ -23,9 +23,9 @@ class Subscribe {
         target.setAttribute('disabled', true)
         this.api.removeSubscriptions(authorId)
             .then( e => {
-                target.innerHTML = this.config.active.text;
-                target.classList.add(this.config.active.class);
-                target.classList.remove(this.config.default.class);
+                target.innerHTML = this.config.default.text;
+                target.classList.add(this.config.default.class);
+                target.classList.remove(this.config.active.class);
                 target.setAttribute(this.config.attr, true);
             })
             .catch( e => {

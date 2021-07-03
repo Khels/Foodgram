@@ -9,13 +9,11 @@ class Follow(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='subscribers',
-        null=True,
     )
     subscriber = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='subscriptions',
-        null=True,
     )
 
     class Meta:
@@ -24,3 +22,6 @@ class Follow(models.Model):
             models.UniqueConstraint(
                 fields=['author', 'subscriber'], name='unique_follow')
         ]
+
+    def __str__(self):
+        return f'{self.subscriber.username} to {self.author.username}'
