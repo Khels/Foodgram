@@ -1,25 +1,17 @@
-from django.views.generic import ListView
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.shortcuts import render
 
-from ..models import Follow
+from .helpers import get_paginator_and_page
 
 
-class SubscriptionListView(ListView):
-    model = Follow
-    template_name = 'recipes/myFollow.html'
-    context_object_name = 'recipes'
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(SubscriptionListView, self).get_context_data(**kwargs)
-        recipes = self.get_queryset().prefetch_related('tags').all()
-        page = self.request.GET.get('page')
-        paginator = Paginator(recipes, self.paginate_by)
-        try:
-            recipes = paginator.page(page)
-        except PageNotAnInteger:
-            recipes = paginator.page(1)
-        except EmptyPage:
-            recipes = paginator.page(paginator.num_pages)
-        context['recipes'] = recipes
-        return context
+@login_required
+def subscription_list(request):
+    subscriptions = request.user.subscriptions.annotate(
+        num_recipes=Count('author__recipes') - 3)
+    paginator, page = get_paginator_and_page(request, subscriptions)
+    return render(
+        request,
+        'recipes/myFollow.html',
+        {'page': page, 'paginator': paginator},
+    )

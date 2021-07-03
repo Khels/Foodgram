@@ -7,7 +7,7 @@ from .recipe_list import recipe_list
 from .recipe_view import recipe_view
 from .save_ingredients import save_ingredients
 from .server_error import server_error
-from .subscription_list import SubscriptionListView
+from .subscription_list import subscription_list
 
 __all__ = [
     page_not_found,
@@ -19,5 +19,5 @@ __all__ = [
     recipe_view,
     save_ingredients,
     server_error,
-    SubscriptionListView,
+    subscription_list,
 ]

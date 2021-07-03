@@ -15,6 +15,6 @@ urlpatterns = [
          views.recipe_delete, name='recipe_delete'),
     path('recipes/create/',
          views.recipe_create, name='recipe_create'),
-    path('mysubscriptions/',
-         views.SubscriptionListView.as_view(), name='subscription_list'),
+    path('subscriptions/',
+         views.subscription_list, name='subscription_list'),
 ]
