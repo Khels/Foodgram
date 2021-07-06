@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from ..forms import RecipeForm
-from ..models import Recipe, RecipeIngredient
-from .helpers import get_ingredients_from_request, get_tags_from_request
-from .save_ingredients import save_ingredients
+from recipes.forms import RecipeForm
+from recipes.models import Recipe, RecipeIngredient
+from recipes.views.helpers import (check_slug, get_ingredients_from_request,
+                                   get_tags_from_request, save_ingredients)
 
 
+@check_slug('recipe_edit')
 @login_required
 def recipe_edit(request, recipe_id, slug):
     '''
@@ -14,10 +15,6 @@ def recipe_edit(request, recipe_id, slug):
     save edited/newly added ingredients separately.
     '''
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    # check if a passed (or not passed at all) slug corresponds to recipe id
-    # otherwise redirect to a url with correct id/slug relation
-    if slug is None or recipe.slug != slug:
-        return redirect('recipe_edit', recipe_id=recipe_id, slug=recipe.slug)
     if request.user != recipe.author:
         return redirect('recipe_view', recipe_id=recipe_id, slug=recipe.slug)
     form = RecipeForm(

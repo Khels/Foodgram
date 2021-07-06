@@ -8,16 +8,16 @@ class RecipeIngredient(models.Model):
         'recipes.Recipe',
         on_delete=models.CASCADE,
         related_name='recipe_ingredient',
-        verbose_name=_('Рецепт'),
+        verbose_name=_('рецепт'),
     )
     ingredient = models.ForeignKey(
         'recipes.Ingredient',
         on_delete=models.CASCADE,
         related_name='recipe_ingredient',
-        verbose_name=_('Ингредиент'),
+        verbose_name=_('ингредиент'),
     )
     amount = models.IntegerField(
-        _('Количество'),
+        _('количество'),
         default=0,
         validators=[
             MinValueValidator(1),
@@ -26,6 +26,8 @@ class RecipeIngredient(models.Model):
     )
 
     class Meta:
+        verbose_name = _('рецепт-ингредиент')
+        verbose_name_plural = _('рецепты-ингредиенты')
         constraints = [
             models.UniqueConstraint(
                 fields=['recipe', 'ingredient'],

@@ -24,7 +24,7 @@ class Api {
         }
     }
   getPurchases () {
-    return fetch(`/purchases`, {
+    return fetch(`api/v1/purchases/`, {
       headers: this.headers,
     })
       .then( e => {
@@ -35,7 +35,7 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`/purchases`, {
+    return fetch(`api/v1/purchases/`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
@@ -50,7 +50,7 @@ class Api {
       })
   }
   removePurchases (id){
-    return fetch(`/purchases/${id}`, {
+    return fetch(`api/v1/purchases/${id}/`, {
       method: 'DELETE',
       headers: this.headers,
     })

@@ -1,24 +1,32 @@
 {% extends "base.html" %}
+
 {% load static %}
+
 {% block title %}Мои подписки{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/pages/myFollow.css' %}">
     <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
 {% endblock css %}
+
 {% block header %}
     {% include "includes/navbar.html" %}
 {% endblock header %}
+
 {% block main_title %}Мои подписки{% endblock %}
+
 {% block content %}
     {% for subscription in page %}
         {% include "includes/recipeElemFollow.html" with subscription=subscription %}
     {% endfor %}
 {% endblock content %}
+
 {% block paginator %}
     {% if page.has_other_pages %}
         {% include "includes/pagination.html" with items=page paginator=paginator %}
     {% endif %}
 {% endblock paginator %}
+
 {% block js %}
     <script src="{% static 'js/config/config.js' %}"></script>
     <script src="{% static 'js/components/MainCards.js' %}"></script>

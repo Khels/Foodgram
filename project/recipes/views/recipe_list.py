@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
-from ..models import Recipe
-from .helpers import get_paginator_and_page, get_tags_and_checked_tags
+from recipes.models import Recipe
+from recipes.views.helpers import (get_paginator_and_page,
+                                   get_tags_and_checked_tags)
 
 
 def recipe_list(request):

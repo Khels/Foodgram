@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from ..forms import RecipeForm
-from .helpers import get_ingredients_from_request, get_tags_from_request
-from .save_ingredients import save_ingredients
+from recipes.forms import RecipeForm
+from recipes.views.helpers import (get_ingredients_from_request,
+                                   get_tags_from_request, save_ingredients)
 
 
 @login_required

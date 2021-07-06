@@ -8,7 +8,7 @@ from .helpers import get_paginator_and_page, get_tags_and_checked_tags
 def favorite_list(request):
     tags, checked_tags = get_tags_and_checked_tags(request)
     favorites = request.user.favorites.filter(
-        recipe__tags__in=checked_tags)
+        recipe__tags__in=checked_tags).distinct().order_by('-id')
     favorite_recipes = [favorite.recipe for favorite in favorites]
     paginator, page = get_paginator_and_page(request, favorite_recipes)
     return render(

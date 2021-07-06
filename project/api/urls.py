@@ -30,4 +30,6 @@ urlpatterns = [
     path('v1/subscriptions/<int:author_id>/', views.FollowView.as_view()),
     path('v1/favorites/', views.FavoriteView.as_view()),
     path('v1/favorites/<int:recipe_id>/', views.FavoriteView.as_view()),
+    path('v1/purchases/', views.PurchaseView.as_view()),
+    path('v1/purchases/<int:recipe_id>/', views.PurchaseView.as_view()),
 ]

@@ -10,50 +10,52 @@ class Recipe(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='recipes',
-        verbose_name=_('Автор'),
+        verbose_name=_('автор'),
     )
     name = models.CharField(
-        _('Название'),
+        _('название'),
         max_length=200,
     )
     pub_date = models.DateTimeField(
-        _('Дата публикации'),
+        _('дата публикации'),
         auto_now_add=True,
         db_index=True,
     )
     image = models.ImageField(
-        _('Картинка'),
+        _('картинка'),
         upload_to='recipes/',
     )
     description = models.TextField(
-        _('Описание'),
+        _('описание'),
     )
     ingredients = models.ManyToManyField(
         'recipes.Ingredient',
         related_name='recipes',
         through='recipes.RecipeIngredient',
+        verbose_name=_('ингредиенты'),
     )
     tags = models.ManyToManyField(
         'recipes.Tag',
         related_name='recipes',
-        verbose_name=_('Теги'),
+        verbose_name=_('теги'),
     )
     cooking_time = models.IntegerField(
-        _('Время приготовления'),
+        _('время приготовления'),
         validators=[
             MinValueValidator(5),
             MaxValueValidator(400),
         ]
     )
     slug = models.SlugField(
+        _('название (англ.)'),
         max_length=200,
         blank=True,
         null=True,
     )
 
     class Meta:
-        verbose_name_plural = _('recipes')
-        verbose_name = _('recipe')
+        verbose_name = _('рецепт')
+        verbose_name_plural = _('рецепты')
         ordering = ['-pub_date']
         constraints = [
             models.UniqueConstraint(

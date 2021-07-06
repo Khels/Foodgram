@@ -1,36 +1,39 @@
 {% extends "base.html" %}
+
 {% load static %}
-{% load recipes_filters %}
+
 {% block title %}Рецепты{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
 {% endblock css %}
+
 {% block header %}
     {% include "includes/navbar.html" with author=author %}
 {% endblock header %}
+
 {% block main_title %}{{ author.get_full_name }}{% endblock %}
-{% block tags %}{% include 'includes/tags.html' with tags=tags checked_tags=checked_tags %}{% endblock %}
+
+{% block tags %}
+    {% include 'includes/tags.html' with tags=tags checked_tags=checked_tags %}
+{% endblock tags %}
+
 {% block subscribe_button %}
-    <div class="author-subscribe" data-author="{{ author.id }}">
-        {% if user.is_authenticated and user != author %}
-            {% if user|is_subscribed:author %}
-                <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button></p>
-            {% else %}
-                <p style="padding: 0 0 2em 0;"><button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button></p>
-            {% endif %}
-        {% endif %}
-    </div>
+    {% include "includes/buttons/subscribe_button_author.html" with author=author %}
 {% endblock subscribe_button %}
+
 {% block content %}
     {% for recipe in page %}
         {% include "includes/recipeElem.html" with recipe=recipe %}
     {% endfor %}
 {% endblock content %}
+
 {% block paginator %}
     {% if page.has_other_pages %}
         {% include "includes/pagination.html" with items=page paginator=paginator %}
     {% endif %}
 {% endblock paginator %}
+
 {% block js %}
     <script src="{% static 'js/components/MainCards.js' %}"></script>
 

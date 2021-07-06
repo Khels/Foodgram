@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from . import views
+from recipes import views
 
 urlpatterns = [
     path('', views.recipe_list, name='recipe_list'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('subscriptions/',
          views.subscription_list, name='subscription_list'),
     path('favorites/', views.favorite_list, name='favorite_list'),
+    path('shopping-list/', views.purchases_list, name='purchases_list'),
 ]

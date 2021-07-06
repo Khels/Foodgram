@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'accounts',
     'recipes',
     'about',
+    'cart',
     'api',
     'rest_framework',
     'sorl.thumbnail',
@@ -98,6 +99,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# sessions settings
+SESSION_SAVE_EVERY_REQUEST = True
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+CART_ID = 'cart_id'
 
 PAGINATE_BY = 6
 

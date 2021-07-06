@@ -1,4 +1,4 @@
-from ..models import Ingredient, RecipeIngredient
+from recipes.models import Ingredient, RecipeIngredient
 
 NAME_INGR = 'nameIngredient_'
 VALUE_INGR = 'valueIngredient_'
