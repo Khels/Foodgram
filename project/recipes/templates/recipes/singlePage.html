@@ -38,8 +38,12 @@
                 </ul>
             </div>
             <ul class="single-card__items">
-                <li class="single-card__item"><button class="button button_style_blue" name="purchases" data-out><span class="icon-plus"></span> Добавить в покупки</button></li>
-                {% include "includes/buttons/subscribe_button_single.html" with author=author %}
+                <li class="single-card__item">
+                    {% include "includes/buttons/purchase_button_single.html" with recipe=recipe %}
+                </li>
+                <li class="single-card__item">
+                    {% include "includes/buttons/subscribe_button_single.html" with author=author %}
+                </li>
             </ul>
             <div class="single-card__section">
                 <h3 class="single-card__section-title">Ингредиенты:</h3>
@@ -68,6 +72,9 @@
     <script src="{% static 'js/components/Header.js' %}"></script>
 
     <script src="{% static 'js/api/Api.js' %}"></script>
-    <script src="{% static 'js/template/singlePage.js' %}"></script>
-    <script src="{% static 'js/template/singlePageNotAuth.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'js/template/singlePage.js' %}"></script>
+    {% else %}
+        <script src="{% static 'js/template/singlePageNotAuth.js' %}"></script>
+    {% endif %}
 {% endblock js %}

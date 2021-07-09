@@ -8,8 +8,8 @@ register = template.Library()
 @register.simple_tag(takes_context=True)
 def choose_tag(context, tag):
     '''
-    Append tag=<tag.slug> parameter to a URL if no such tag was already passed
-    otherwise delete such tag parameter from URL.
+    Appends tag=<tag.slug> parameter to a URL if no such tag was already
+    passed otherwise deletes such tag parameter from URL.
     '''
     request = context['request']
     if request.GET:
@@ -26,7 +26,7 @@ def choose_tag(context, tag):
 @register.simple_tag(takes_context=True)
 def preserve_tags(context, page_number):
     '''
-    Given a request like this /?page=1&tags=lunch&tags=dinner return a URL
+    Given a request like this /?page=1&tags=lunch&tags=dinner returns a URL
     with page number changed preserving other parameters however.
     '''
     request = context['request']

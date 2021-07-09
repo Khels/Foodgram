@@ -21,3 +21,11 @@ def is_favorite(recipe, user):
 def is_subscribed(user, author):
     '''Check if a given user is subscribed to another user (author).'''
     return Follow.objects.filter(author=author, subscriber=user).exists()
+
+
+@register.filter()
+def is_purchased(recipe, cart):
+    '''
+    Checks if a given recipe is already in user's shopping list
+    '''
+    return recipe in cart

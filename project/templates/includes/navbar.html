@@ -8,11 +8,11 @@
             {% url 'recipe_create' as recipe_create %}
             {% url 'subscription_list' as subscription_list %}
             {% url 'favorite_list' as favorite_list %}
-            {% url 'purchases_list' as purchases_list %}
+            {% url 'purchase_list' as purchase_list %}
+            <li class="nav__item {% if request.get_full_path|trunc_params == recipe_list or request.get_full_path|trunc_params == recipe_author %}nav__item_active{% endif %}">
+                <a href="{% url 'recipe_list' %}" class="nav__link link">Рецепты</a>
+            </li>
             {% if user.is_authenticated %}
-                <li class="nav__item {% if request.get_full_path|trunc_params == recipe_list or request.get_full_path|trunc_params == recipe_author %}nav__item_active{% endif %}">
-                    <a href="{% url 'recipe_list' %}" class="nav__link link">Рецепты</a>
-                </li>
                 <li class="nav__item {% if request.get_full_path|trunc_params == subscription_list %}nav__item_active{% endif %}">
                     <a href="{% url 'subscription_list' %}" class="nav__link link">Мои подписки</a>
                 </li>
@@ -22,23 +22,16 @@
                 <li class="nav__item {% if request.get_full_path|trunc_params == favorite_list %}nav__item_active{% endif %}">
                     <a href="{% url 'favorite_list' %}" class="nav__link link">Избранное</a>
                 </li>
-                <li class="nav__item {% if request.get_full_path|trunc_params == purchases_list %}nav__item_active{% endif %}">
-                    <a href="{% url 'purchases_list' %}" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">4</span>
-                </li>
-            {% else %}
-            <!-- Navbar for not authenticated user -->
-                <li class="nav__item {% if request.get_full_path|trunc_params == recipe_list %}nav__item_active{% endif %}">
-                    <a href="{% url 'recipe_list' %}" class="nav__link link">Рецепты</a>
-                </li>
-                <li class="nav__item nav__item_disabled">
-                    <a href="#" class="nav__link link">Список покупок <span class="badge badge_style_blue nav__badge" id="counter">4</span></a>
-                </li>
             {% endif %}
+            <li class="nav__item {% if request.get_full_path|trunc_params == purchase_list %}nav__item_active{% endif %}">
+                <a href="{% url 'purchase_list' %}" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">{{ counter }}</span>
+            </li>
         </ul>
         <ul class="nav__items list">
             <!-- Navbar for authenticated user -->
             {% url 'password_change' as password_change %}
             {% url 'login' as login %}
+            {% url 'signup' as signup %}
             {% if user.is_authenticated %}
                 <li class="nav__item {% if request.get_full_path|trunc_params == password_change %}nav__item_active{% endif %}">
                     <a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a>
@@ -51,7 +44,7 @@
                 <li class="nav__item {% if request.get_full_path|trunc_params == login %}nav__item_active{% endif %}">
                     <a href="{% url 'login' %}" class="nav__link link">Войти</a>
                 </li>
-                <li class="nav__item">
+                <li class="nav__item {% if request.get_full_path|trunc_params == signup %}nav__item_active{% endif %}">
                     <a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a>
                 </li>
             {% endif %}

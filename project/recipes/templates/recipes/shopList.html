@@ -18,8 +18,8 @@
 {% block content %}
     <div class="card-list card-list_column">
         <ul class="shopping-list">
-            {% for recipe in recipes %}
-                <li class="shopping-list__item" data-id="111">
+            {% for recipe in cart %}
+                <li class="shopping-list__item" data-id="{{ recipe.id }}">
                     <div class="recipe recipe_reverse">
                         {% thumbnail recipe.image "960x960" crop="center" upscale=True as im %}
                             <img src="{{ im.url }}" alt="Фото рецепта" class="recipe__image recipe__image_big">
@@ -27,11 +27,11 @@
                         <h3 class="recipe__title">{{ recipe.name }}</h3>
                         <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мин.</p>
                     </div>
-                    <a href="#" class="shopping-list__button link">Удалить</a>
+                    <button class="button shopping-list__button">Удалить</button>
                 </li>
             {% endfor %}
         </ul>
-        <a href="#"><button class="button button_style_blue">Скачать список</button></a>
+        <a href="{% url 'purchase_download' %}"><button class="button button_style_blue">Скачать список</button></a>
     </div>
 {% endblock content %}
 

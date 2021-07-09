@@ -26,4 +26,5 @@ class Cart(models.Model):
         ordering = ['-creation_date']
 
     def __str__(self):
-        return str(self.creation_date)
+        return (f"{self.customer}'s cart"
+                if self.customer else f"Cart №{self.id}")

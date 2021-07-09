@@ -18,5 +18,7 @@ urlpatterns = [
     path('subscriptions/',
          views.subscription_list, name='subscription_list'),
     path('favorites/', views.favorite_list, name='favorite_list'),
-    path('shopping-list/', views.purchases_list, name='purchases_list'),
+    path('shopping-list/', views.purchase_list, name='purchase_list'),
+    path('shopping-list/download/',
+         views.purchase_download, name='purchase_download'),
 ]
