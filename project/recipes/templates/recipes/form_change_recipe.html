@@ -1,19 +1,24 @@
 {% extends "base.html" %}
+
 {% load static %}
 {% load profiles_filters %}
-{% block title %}Создание рецепта{% endblock %}
+
+{% block title %}Редактирование рецепта{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/pages/form.css' %}">
 {% endblock css %}
+
 {% block header %}
     {% include "includes/navbar.html" %}
 {% endblock header %}
+
 {% block content %}
     <div class="main__header">
-        <h1 class="main__title">Создание рецепта</h1>
+        <h1 class="main__title">Редактирование рецепта</h1>
     </div>
     <div class="form-container">
-        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipe_create' %}">
+        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipe_edit' recipe.id recipe.slug %}">
             {% csrf_token %}
             <div class="form__group">
                 <label for="id_name" class="form__label">Название рецепта</label>
@@ -86,11 +91,13 @@
                 </div>
             </div>
             <div class="form__footer">
-                <button class="button button_style_blue" type="submit">Создать рецепт</button>
+                <button type="submit" class="button button_style_blue">Сохранить</button>
+                <a style="margin-left: 2.5em" href="{% url 'recipe_delete' recipe.id recipe.slug %}" class="form__ingredient-link">Удалить</a>
             </div>
         </form>
     </div>
 {% endblock content %}
+
 {% block js %}
     <script src="{% static 'js/config/config.js' %}"></script>
     <script src="{% static 'js/components/Header.js' %}"></script>

@@ -3,11 +3,11 @@ from io import BytesIO
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import now
+from recipes.models import Recipe, RecipeIngredient
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 
-from recipes.models import Recipe, RecipeIngredient
 from cart import models
 
 

@@ -8,7 +8,7 @@ def check_slug(redirect_to):
     Suppose you have the following URL address:
     https://foodgram.com/recipes/<recipe_id>/<slug>/
 
-    Call this decorator to ensure that passed <slug> corresponds
+    Call this decorator to ensure that a passed <slug> corresponds
     to <recipe_id> otherwise redirect to a URL address
     with correct recipe_id/slug relation.
     '''

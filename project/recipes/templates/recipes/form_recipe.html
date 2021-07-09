@@ -1,19 +1,24 @@
 {% extends "base.html" %}
+
 {% load static %}
 {% load profiles_filters %}
-{% block title %}Редактирование рецепта{% endblock %}
+
+{% block title %}Создание рецепта{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/pages/form.css' %}">
 {% endblock css %}
+
 {% block header %}
     {% include "includes/navbar.html" %}
 {% endblock header %}
+
 {% block content %}
     <div class="main__header">
-        <h1 class="main__title">Редактирование рецепта</h1>
+        <h1 class="main__title">Создание рецепта</h1>
     </div>
     <div class="form-container">
-        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipe_edit' recipe.id recipe.slug %}">
+        <form class="form" method="post" enctype="multipart/form-data" action="{% url 'recipe_create' %}">
             {% csrf_token %}
             <div class="form__group">
                 <label for="id_name" class="form__label">Название рецепта</label>
@@ -50,20 +55,12 @@
                         <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                     </div>
                     <div class="form__field-group-ingredientes-container">
-                        <!-- {% for ingredient, amount in ingredients %}
+                        {% for ingredient, amount in ingredients %}
                             <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
                                 <span> {{ ingredient.title }} {{ amount }}{{ ingredient.dimension }}</span> <span class="form__field-item-delete"></span>
                                 <input id="nameIngredient_{{ forloop.counter }}" name="nameIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.title }}">
                                 <input id="valueIngredient_{{ forloop.counter }}" name="valueIngredient_{{ forloop.counter }}" type="hidden" value="{{ amount }}">
                                 <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}" type="hidden" value="{{ ingredient.dimension }}">
-                            </div>
-                        {% endfor %} -->
-                        {% for rec_ingr in recipe_ingredients %}
-                            <div class="form__field-item-ingredient" id="ing_{{ forloop.counter }}">
-                                <span> {{ rec_ingr.ingredient.title }} {{ rec_ingr.amount }}{{ rec_ingr.ingredient.dimension }}</span> <span class="form__field-item-delete"></span>
-                                <input id="nameIngredient_{{ forloop.counter }}" name="nameIngredient_{{ forloop.counter }}" type="hidden" value="{{ rec_ingr.ingredient.title }}">
-                                <input id="valueIngredient_{{ forloop.counter }}" name="valueIngredient_{{ forloop.counter }}" type="hidden" value="{{ rec_ingr.amount }}">
-                                <input id="unitsIngredient_{{ forloop.counter }}" name="unitsIngredient_{{ forloop.counter }}" type="hidden" value="{{ rec_ingr.ingredient.dimension }}">
                             </div>
                         {% endfor %}
                     </div>
@@ -94,12 +91,12 @@
                 </div>
             </div>
             <div class="form__footer">
-                <button type="submit" class="button button_style_blue">Сохранить</button>
-                <a style="margin-left: 2.5em" href="{% url 'recipe_delete' recipe.id recipe.slug %}" class="form__ingredient-link">Удалить</a>
+                <button class="button button_style_blue" type="submit">Создать рецепт</button>
             </div>
         </form>
     </div>
 {% endblock content %}
+
 {% block js %}
     <script src="{% static 'js/config/config.js' %}"></script>
     <script src="{% static 'js/components/Header.js' %}"></script>

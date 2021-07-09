@@ -15,15 +15,17 @@
       {% block header %}{% endblock %}
     </header>
     <main class="main container">
-      <div class="main__header">
-        <h1 class="main__title">{% block main_title %}{% endblock %}</h1>
-        {% block tags %}{% endblock %}
-      </div>
-        {% block subscribe_button %}{% endblock %}
-      <div class="card-list">
-        {% block content %}{% endblock %}
-      </div>
-      {% block paginator %}{% endblock %}
+      {% block main %}
+        <div class="main__header">
+          <h1 class="main__title">{% block main_title %}{% endblock %}</h1>
+          {% block tags %}{% endblock %}
+        </div>
+          {% block subscribe_button %}{% endblock %}
+        <div class="card-list">
+          {% block content %}{% endblock %}
+        </div>
+        {% block paginator %}{% endblock %}
+      {% endblock %}
     </main>
     {% include 'includes/footer.html' %}
     {% block js %}{% endblock %}

@@ -1,18 +1,21 @@
 from django.shortcuts import get_object_or_404, render
-
+from django.views.decorators.cache import cache_page
 from recipes.models import Recipe
 from recipes.views.helpers import check_slug
 
 
+@cache_page(7)
 @check_slug('recipe_view')
 def recipe_view(request, recipe_id, slug=None):
-    '''Render one recipe'''
+    '''
+    Renders the page with detailed information about a specific recipe.
+    '''
     recipe = get_object_or_404(Recipe, id=recipe_id)
     tags = recipe.tags.all()
     recipe_ingredient = recipe.recipe_ingredient.all()
     return render(
         request,
-        'recipes/singlePage.html',
+        'recipes/single_page.html',
         {
             'author': recipe.author,
             'recipe': recipe,

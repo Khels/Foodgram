@@ -8,6 +8,9 @@ User = get_user_model()
 
 
 def recipe_author(request, username):
+    '''
+    Renders the page with author's recipes.
+    '''
     author = get_object_or_404(User, username=username)
     tags, checked_tags = get_tags_and_checked_tags(request)
     recipes = Recipe.objects.prefetch_related('author', 'tags').filter(
@@ -15,7 +18,7 @@ def recipe_author(request, username):
     paginator, page = get_paginator_and_page(request, recipes)
     return render(
         request,
-        'recipes/authorRecipe.html',
+        'recipes/author_recipe.html',
         {
             'page': page,
             'paginator': paginator,

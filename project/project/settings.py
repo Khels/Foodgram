@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'sorl.thumbnail',
     'django_filters',
+    'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,6 +65,12 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
 WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
@@ -71,6 +79,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -106,6 +118,8 @@ USE_TZ = True
 SESSION_SAVE_EVERY_REQUEST = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+SESSION_COOKIE_AGE = 1209600
 
 CART_ID = 'cart_id'
 
