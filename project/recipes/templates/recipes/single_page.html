@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/pages/single.css' %}">
 {% endblock css %}
 
-{% block header %}
-    {% include "includes/navbar.html" %}
-{% endblock header %}
-
 {% block content %}
     <div class="single-card" data-id="{{ recipe.id }}" data-author="{{ author.id }}">
         {% thumbnail recipe.image "1080x1080" crop="center" upscale=True as im %}

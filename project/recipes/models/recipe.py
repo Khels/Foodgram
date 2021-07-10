@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from pytils.translit import slugify
 
 
@@ -10,52 +9,52 @@ class Recipe(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='recipes',
-        verbose_name=_('автор'),
+        verbose_name='автор',
     )
     name = models.CharField(
-        _('название'),
+        'название',
         max_length=200,
     )
     pub_date = models.DateTimeField(
-        _('дата публикации'),
+        'дата публикации',
         auto_now_add=True,
         db_index=True,
     )
     image = models.ImageField(
-        _('картинка'),
+        'картинка',
         upload_to='recipes/',
     )
     description = models.TextField(
-        _('описание'),
+        'описание',
     )
     ingredients = models.ManyToManyField(
         'recipes.Ingredient',
         related_name='recipes',
         through='recipes.RecipeIngredient',
-        verbose_name=_('ингредиенты'),
+        verbose_name='ингредиенты',
     )
     tags = models.ManyToManyField(
         'recipes.Tag',
         related_name='recipes',
-        verbose_name=_('теги'),
+        verbose_name='теги',
     )
     cooking_time = models.IntegerField(
-        _('время приготовления'),
+        'время приготовления',
         validators=[
             MinValueValidator(5),
             MaxValueValidator(400),
         ]
     )
     slug = models.SlugField(
-        _('название (англ.)'),
+        'название (англ.)',
         max_length=200,
         blank=True,
         null=True,
     )
 
     class Meta:
-        verbose_name = _('рецепт')
-        verbose_name_plural = _('рецепты')
+        verbose_name = 'рецепт'
+        verbose_name_plural = 'рецепты'
         ordering = ['-pub_date']
         constraints = [
             models.UniqueConstraint(
@@ -69,4 +68,4 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Recipe, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)

@@ -15,7 +15,7 @@ def check_slug(redirect_to):
     def actual_decorator(function):
         def wrapped(*args, **kwargs):
             recipe_id = kwargs.get('recipe_id')
-            slug = kwargs.get('slug', None)
+            slug = kwargs.get('slug')
             recipe = get_object_or_404(Recipe, id=recipe_id)
             if slug is None or recipe.slug != slug:
                 return redirect(

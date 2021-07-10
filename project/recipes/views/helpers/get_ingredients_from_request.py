@@ -1,4 +1,4 @@
-from ...models import Ingredient
+from recipes.models import Ingredient
 
 
 def get_ingredients_from_request(request):

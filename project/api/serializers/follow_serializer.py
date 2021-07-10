@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -21,7 +20,7 @@ class FollowSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['author'] == data['subscriber']:
             raise serializers.ValidationError(
-                _('Вы не можете подписаться на самого себя!'))
+                'Вы не можете подписаться на самого себя!')
         return data
 
     class Meta:

@@ -30,7 +30,7 @@ def recipe_edit(request, recipe_id, slug):
         return redirect('recipe_view', recipe_id=recipe_id, slug=recipe.slug)
     tags = recipe.tags.all()
     rec_ingrs = RecipeIngredient.objects.filter(
-        recipe=recipe).prefetch_related('ingredient').all()
+        recipe=recipe).prefetch_related('ingredient')
     ingredients = [
         (rec_ingr.ingredient, rec_ingr.amount) for rec_ingr in rec_ingrs]
     if request.method == 'POST':

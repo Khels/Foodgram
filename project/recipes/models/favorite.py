@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -10,18 +9,18 @@ class Favorite(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='favorites',
-        verbose_name=_('пользователь'),
+        verbose_name='пользователь',
     )
     recipe = models.ForeignKey(
         'recipes.Recipe',
         on_delete=models.CASCADE,
         related_name='favorites',
-        verbose_name=_('рецепт'),
+        verbose_name='рецепт',
     )
 
     class Meta:
-        verbose_name = _('избранное')
-        verbose_name_plural = _('избранные')
+        verbose_name = 'избранное'
+        verbose_name_plural = 'избранные'
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'recipe'], name='unique_favorite')

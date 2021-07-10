@@ -8,13 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
 {% endblock css %}
 
-{% block header %}
-    {% include "includes/navbar.html" %}
-{% endblock header %}
-
 {% block main_title %}Избранное{% endblock %}
 
-{% block tags %}{% include 'includes/tags.html' with tags=tags checked_tags=checked_tags %}{% endblock %}
+{% block tags %}
+    {% include 'includes/tags.html' with tags=tags checked_tags=checked_tags %}
+{% endblock %}
 
 {% block content %}
     {% for recipe in page %}

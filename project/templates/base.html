@@ -12,7 +12,9 @@
   </head>
   <body class="body">
     <header class="header">
-      {% block header %}{% endblock %}
+      {% block header %}
+          {% include "includes/navbar.html" %}
+      {% endblock header %}
     </header>
     <main class="main container">
       {% block main %}

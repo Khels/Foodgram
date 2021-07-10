@@ -1,14 +1,16 @@
+import logging
 from io import BytesIO
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.timezone import now
 from recipes.models import Recipe, RecipeIngredient
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 
 from cart import models
+
+logger = logging.getLogger(__name__)
 
 
 class CartIsEmpty(Exception):
@@ -20,22 +22,20 @@ class CartIsEmpty(Exception):
 
 class Cart:
     def __init__(self, request):
+        self.request = request
         cart_id = request.session.get(settings.CART_ID)
         user = request.user if request.user.is_authenticated else None
-        try:
-            if user:
-                try:
-                    cart = models.Cart.objects.get(customer=user)
-                except ObjectDoesNotExist:
-                    cart = models.Cart.objects.get(id=cart_id)
-                    cart.customer = user
-                    cart.save()
-                self.append(cart, cart_id)
-                request.session[settings.CART_ID] = cart.id
-            else:
-                cart = models.Cart.objects.get(id=cart_id)
-        except ObjectDoesNotExist:
-            cart = self.new(request)
+        if user:
+            try:
+                cart = models.Cart.objects.get(customer=user)
+            except models.Cart.DoesNotExist:
+                cart = self.get(id=cart_id)
+                cart.customer = user
+                cart.save()
+            self.append(cart, cart_id)
+            request.session[settings.CART_ID] = cart.id
+        else:
+            cart = self.get(id=cart_id)
         self.cart = cart
 
     def __iter__(self):
@@ -48,22 +48,28 @@ class Cart:
                 return True
         return False
 
+    def get(self, *args, **kwargs):
+        '''
+        Responsible for extracting object from database and
+        exception handling.
+        '''
+        try:
+            cart = models.Cart.objects.get(*args, **kwargs)
+        except models.Cart.DoesNotExist:
+            cart = self.new(self.request)
+        return cart
+
     def new(self, request):
+        cart = models.Cart.objects.create()
         if request.user.is_authenticated:
-            cart = models.Cart.objects.create(
-                customer=request.user,
-                creation_date=now(),
-            )
-        else:
-            cart = models.Cart.objects.create(
-                creation_date=now(),
-            )
+            cart.customer = request.user
+            cart.save()
         request.session[settings.CART_ID] = cart.id
         return cart
 
     def add(self, recipe_id):
         '''
-        Raises ObjectDoesNotExist if no recipe was found.
+        Raises Cart.DoesNotExist if no recipe was found.
 
         There's no exception handling because the view should respond
         to a request accordingly with operation success=True/False.
@@ -74,7 +80,7 @@ class Cart:
 
     def remove(self, recipe_id):
         '''
-        Raises ObjectDoesNotExist if no recipe was found
+        Raises Cart.DoesNotExist if no recipe was found
         or CartIsEmpty if there were no recipes in cart.
 
         There's no exception handling because the view should respond
@@ -87,17 +93,20 @@ class Cart:
         self.cart.save()
 
     def append(self, cart_model, cart_id):
+        '''
+        Appends all items from anonym's cart to logged in user's.
+        '''
         if not cart_model.id == cart_id:
             try:
                 old_cart = models.Cart.objects.get(id=cart_id)
             except ObjectDoesNotExist:
-                pass
+                logger.info(f'Cart object with id={cart_id} not found.')
             else:
                 for recipe in old_cart.recipes.all():
                     cart_model.recipes.add(recipe)
             # delete anonym's cart after you appended all items from it
             # to the currently logged in user's cart
-            models.Cart.objects.filter(id=cart_id).delete()
+            old_cart.delete()
 
     def count(self):
         return self.cart.recipes.count()

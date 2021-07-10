@@ -1,28 +1,27 @@
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class Cart(models.Model):
     customer = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        verbose_name=_('покупатель'),
+        verbose_name='покупатель',
         null=True,
     )
     recipes = models.ManyToManyField(
         'recipes.Recipe',
         related_name='carts',
-        verbose_name=_('рецепты'),
+        verbose_name='рецепты',
     )
     creation_date = models.DateTimeField(
-        _('дата создания'),
-        editable=False,
+        'дата создания',
+        auto_now_add=True,
     )
 
     class Meta:
-        verbose_name = _('корзина')
-        verbose_name_plural = _('корзины')
+        verbose_name = 'корзина'
+        verbose_name_plural = 'корзины'
         ordering = ['-creation_date']
 
     def __str__(self):

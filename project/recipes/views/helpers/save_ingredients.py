@@ -1,5 +1,4 @@
 from django.forms import ValidationError
-from django.utils.translation import gettext_lazy as _
 from recipes.models import Ingredient, RecipeIngredient
 
 NAME_INGR = 'nameIngredient_'
@@ -24,10 +23,13 @@ def save_ingredients(request, recipe):
                 ingredient=ingredient,
                 recipe=recipe,
             )
-            rec_ingr.amount += int(ingredient_amount)
+            if created:
+                rec_ingr.amount = int(ingredient_amount)
+            else:
+                rec_ingr.amount += int(ingredient_amount)
             rec_ingr.save()
             ingr_cnt += 1
     if ingr_cnt == 0:
         raise ValidationError(
-            _('Вы должны добавить как минимум один ингредиент!')
+            'Вы должны добавить как минимум один ингредиент!'
         )

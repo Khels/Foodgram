@@ -1,4 +1,5 @@
 from django.utils.deprecation import MiddlewareMixin
+
 from cart.cart import Cart
 
 

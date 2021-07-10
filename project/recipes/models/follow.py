@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -10,18 +9,18 @@ class Follow(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='subscribers',
-        verbose_name=_('автор'),
+        verbose_name='автор',
     )
     subscriber = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='subscriptions',
-        verbose_name=_('подписчик'),
+        verbose_name='подписчик',
     )
 
     class Meta:
-        verbose_name = _('подписка')
-        verbose_name_plural = _('подписки')
+        verbose_name = 'подписка'
+        verbose_name_plural = 'подписки'
         ordering = ['-id']
         constraints = [
             models.UniqueConstraint(

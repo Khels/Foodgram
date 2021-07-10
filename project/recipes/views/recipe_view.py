@@ -12,7 +12,7 @@ def recipe_view(request, recipe_id, slug=None):
     '''
     recipe = get_object_or_404(Recipe, id=recipe_id)
     tags = recipe.tags.all()
-    recipe_ingredient = recipe.recipe_ingredient.all()
+    recipe_ingredient = recipe.recipe_ingredients.all()
     return render(
         request,
         'recipes/single_page.html',
