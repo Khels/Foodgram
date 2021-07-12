@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="card__footer">
-        {% include "includes/buttons/purchase_button_index.html" with recipe=recipe %}
-        {% include "includes/buttons/favorite_button_index.html" with recipe=recipe %}
+        {% include "includes/button.html" with type='purchase' recipe=recipe %}
+        {% include "includes/button.html" with type='favorite' recipe=recipe %}
     </div>
 </div>

@@ -1,40 +1,29 @@
-{% load recipes_filters %}
-
 <nav class="nav">
     <div class="nav__container container">
         <ul class="nav__items list">
             <!-- Navbar for authenticated user -->
-            {% url 'recipe_list' as recipe_list %}
-            {% url 'recipe_author' username=author.username as recipe_author %}
-            {% url 'recipe_create' as recipe_create %}
-            {% url 'subscription_list' as subscription_list %}
-            {% url 'favorite_list' as favorite_list %}
-            {% url 'purchase_list' as purchase_list %}
-            <li class="nav__item {% if request.get_full_path|trunc_params == recipe_list or request.get_full_path|trunc_params == recipe_author %}nav__item_active{% endif %}">
+            <li class="nav__item {% if request.resolver_match.url_name == 'recipe_list' or request.recolver_match.url_name == 'recipe_author' %}nav__item_active{% endif %}">
                 <a href="{% url 'recipe_list' %}" class="nav__link link">Рецепты</a>
             </li>
             {% if user.is_authenticated %}
-                <li class="nav__item {% if request.get_full_path|trunc_params == subscription_list %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'subscription_list' %}nav__item_active{% endif %}">
                     <a href="{% url 'subscription_list' %}" class="nav__link link">Мои подписки</a>
                 </li>
-                <li class="nav__item {% if request.get_full_path|trunc_params == recipe_create %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'recipe_create' %}nav__item_active{% endif %}">
                     <a href="{% url 'recipe_create' %}" class="nav__link link">Создать рецепт</a>
                 </li>
-                <li class="nav__item {% if request.get_full_path|trunc_params == favorite_list %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'favorite_list' %}nav__item_active{% endif %}">
                     <a href="{% url 'favorite_list' %}" class="nav__link link">Избранное</a>
                 </li>
             {% endif %}
-            <li class="nav__item {% if request.get_full_path|trunc_params == purchase_list %}nav__item_active{% endif %}">
+            <li class="nav__item {% if request.resolver_match.url_name == 'purchase_list' %}nav__item_active{% endif %}">
                 <a href="{% url 'purchase_list' %}" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">{{ counter }}</span>
             </li>
         </ul>
         <ul class="nav__items list">
             <!-- Navbar for authenticated user -->
-            {% url 'password_change' as password_change %}
-            {% url 'login' as login %}
-            {% url 'signup' as signup %}
             {% if user.is_authenticated %}
-                <li class="nav__item {% if request.get_full_path|trunc_params == password_change %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'password_change' %}nav__item_active{% endif %}">
                     <a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a>
                 </li>
                 <li class="nav__item">
@@ -42,10 +31,10 @@
                 </li>
             {% else %}
             <!-- Navbar for not authenticated user -->
-                <li class="nav__item {% if request.get_full_path|trunc_params == login %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'login' %}nav__item_active{% endif %}">
                     <a href="{% url 'login' %}" class="nav__link link">Войти</a>
                 </li>
-                <li class="nav__item {% if request.get_full_path|trunc_params == signup %}nav__item_active{% endif %}">
+                <li class="nav__item {% if request.resolver_match.url_name == 'signup' %}nav__item_active{% endif %}">
                     <a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a>
                 </li>
             {% endif %}

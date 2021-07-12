@@ -2,30 +2,12 @@
 {% load static %}
 {% block title %}Ошибка 500{% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/footer.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/__brand/footer__brand.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/__container/footer__container.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/__item/footer__item.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/__items/footer__items.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/footer/__link/footer__link.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/link/link.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blocks/container/container.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/index.css' %}">
 {% endblock %}
 {% block content %}
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Ошибка 500</h1>
-                <p class="lead">Ошибка на сервере, попробуйте обновить страницу или обратиться позже</p>
-                <p class="lead"><a href="{% url 'recipe_list' %}">Вернуться на главную</a></p>
-            </div>
-        </div>
-    </main>
-{% endblock %}
-{% block js %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div class="main__header">
+        <h1 class="main__title">Ошибка 500</h1>
+    </div>
+    <p class="form__info-text">Ошибка на сервере, попробуйте обновить страницу или обратиться позже</p>
+    <p class="form__info-text">Вернуться на <a href="{% url 'recipe_list' %}" class="link">главную</a>.</p>
 {% endblock %}

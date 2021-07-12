@@ -19,7 +19,11 @@
 {% endblock tags %}
 
 {% block subscribe_button %}
-    {% include "includes/buttons/subscribe_button_author.html" with author=author %}
+    <div class="author-subscribe" data-author="{{ author.id }}">
+        <p style="padding: 0 0 2em 0;">
+            {% include "includes/button.html" with type='subscribe' author=author %}
+        </p>
+    </div>
 {% endblock subscribe_button %}
 
 {% block content %}

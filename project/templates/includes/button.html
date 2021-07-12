@@ -1,0 +1,47 @@
+{% load recipes_filters %}
+
+{% if type == 'subscribe' %}
+    {% if user.is_authenticated and user != author %}
+        {% if user|is_subscribed:author %}
+            <button class="button button_style_light-blue button_size_subscribe" name="subscribe">Отписаться от автора</button>
+        {% else %}
+            <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>Подписаться на автора</button>
+        {% endif %}
+    {% endif %}
+{% elif type == 'favorite' %}
+    {% if user.is_authenticated %}
+        {% if recipe|is_favorite:user %}
+            {% if request.resolver_match.url_name == 'recipe_view' %}
+                <button class="button button_style_none" name="favorites">
+                    <span class="icon-favorite icon-favorite_big icon-favorite_active"></span>
+                </button>
+                <div class="single-card__favorite-tooltip tooltip">Убрать из избранного</div>
+            {% else %}
+                <button class="button button_style_none" name="favorites">
+                    <span class="icon-favorite icon-favorite_active"></span>
+                </button>
+            {% endif %}
+        {% else %}
+            {% if request.resolver_match.url_name == 'recipe_view' %}
+                <button class="button button_style_none" name="favorites" data-out>
+                    <span class="icon-favorite icon-favorite_big"></span>
+                </button>
+                <div class="single-endifcard__favorite-tooltip tooltip">Добавить в избранное</div>
+            {% else %}
+                <button class="button button_style_none" name="favorites" data-out>
+                    <span class="icon-favorite"></span>
+                </button>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% elif type == 'purchase' %}
+    {% if recipe|is_purchased:request.cart %}
+        <button class="button button_style_light-blue-outline" name="purchases">
+            <span class="icon-check button__icon"></span> Рецепт добавлен
+        </button>
+    {% else %}
+        <button class="button button_style_{% if request.resolver_match.url_name == 'recipe_list' %}light-blue{% else %}blue{% endif %}" name="purchases" data-out>
+            <span class="icon-plus button__icon"></span>Добавить в покупки
+        </button>
+    {% endif %}
+{% endif %}

@@ -1,15 +1,15 @@
 from api.serializers import FavoriteSerializer
 from django.shortcuts import get_object_or_404
 from recipes.models import Favorite, Recipe
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
-class FavoriteView(APIView):
+class FavoriteViewset(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def create(self, request):
         recipe_id = request.data.get('id')
         serializer = FavoriteSerializer(
             data={'user': request.user, 'recipe': recipe_id})
@@ -17,8 +17,8 @@ class FavoriteView(APIView):
         serializer.save()
         return Response({'success': True})
 
-    def delete(self, request, recipe_id):
-        recipe = get_object_or_404(Recipe, id=recipe_id)
+    def destroy(self, request, pk):
+        recipe = get_object_or_404(Recipe, id=pk)
         favorite = get_object_or_404(
             Favorite, user=request.user, recipe=recipe)
         favorite.delete()

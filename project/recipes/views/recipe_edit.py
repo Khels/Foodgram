@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from recipes.forms import RecipeForm
-from recipes.models import Recipe, RecipeIngredient
+from recipes.models import Recipe, RecipeIngredient, Ingredient, recipe_ingredient
 from recipes.views.helpers import (check_slug, get_ingredients_from_request,
                                    get_tags_from_request, save_ingredients)
+from django.db.models import F
 
 
 @check_slug('recipe_edit')
@@ -29,8 +30,7 @@ def recipe_edit(request, recipe_id, slug):
         recipe.save()
         return redirect('recipe_view', recipe_id=recipe_id, slug=recipe.slug)
     tags = recipe.tags.all()
-    rec_ingrs = RecipeIngredient.objects.filter(
-        recipe=recipe).prefetch_related('ingredient')
+    rec_ingrs = recipe.recipe_ingredients.prefetch_related('ingredient')
     ingredients = [
         (rec_ingr.ingredient, rec_ingr.amount) for rec_ingr in rec_ingrs]
     if request.method == 'POST':

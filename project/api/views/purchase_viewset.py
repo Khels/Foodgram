@@ -1,21 +1,17 @@
+from cart.cart import CartIsEmpty
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from cart.cart import CartIsEmpty
 
 User = get_user_model()
 
 
-class PurchaseView(APIView):
+class PurchaseViewset(viewsets.ViewSet):
     permission_classes = [AllowAny]
 
-    def get(self, request):
-        return Response({'success': True})
-
-    def post(self, request):
+    def create(self, request):
         recipe_id = request.data.get('id')
         cart = request.cart
         try:
@@ -24,10 +20,10 @@ class PurchaseView(APIView):
             return Response({'success': False})
         return Response({'success': True})
 
-    def delete(self, request, recipe_id):
+    def destroy(self, request, pk):
         cart = request.cart
         try:
-            cart.remove(recipe_id)
+            cart.remove(pk)
         except (ObjectDoesNotExist, CartIsEmpty):
             return Response({'success': False})
         return Response({'success': True})

@@ -1,11 +1,11 @@
-from .favorite_view import FavoriteView
-from .follow_view import FollowView
+from .favorite_viewset import FavoriteViewset
+from .follow_viewset import FollowViewset
 from .ingredient_viewset import IngredientViewset
-from .purchase_view import PurchaseView
+from .purchase_viewset import PurchaseViewset
 
 __all__ = [
-    FavoriteView,
-    FollowView,
+    FavoriteViewset,
+    FollowViewset,
     IngredientViewset,
-    PurchaseView,
+    PurchaseViewset,
 ]
