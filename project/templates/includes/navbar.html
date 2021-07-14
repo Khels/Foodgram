@@ -2,7 +2,7 @@
     <div class="nav__container container">
         <ul class="nav__items list">
             <!-- Navbar for authenticated user -->
-            <li class="nav__item {% if request.resolver_match.url_name == 'recipe_list' or request.recolver_match.url_name == 'recipe_author' %}nav__item_active{% endif %}">
+            <li class="nav__item {% if request.resolver_match.url_name == 'recipe_list' or request.resolver_match.url_name == 'recipe_author' %}nav__item_active{% endif %}">
                 <a href="{% url 'recipe_list' %}" class="nav__link link">Рецепты</a>
             </li>
             {% if user.is_authenticated %}

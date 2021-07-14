@@ -17,7 +17,7 @@
         <div class="single-card__info">
             <div class="single-card__header-info">
                 <h1 class="single-card__title">{{ recipe.name }}</h1>
-                {% include "includes/button.html" with type='favorite' recipe=recipe %}
+                {% include "includes/buttons/favorite_button.html" with recipe=recipe %}
             </div>
             <ul class="single-card__items">
                 {% for tag in tags %}
@@ -35,10 +35,10 @@
             </div>
             <ul class="single-card__items">
                 <li class="single-card__item">
-                    {% include "includes/button.html" with type='purchase' recipe=recipe %}
+                    {% include "includes/buttons/purchase_button.html" with recipe=recipe %}
                 </li>
                 <li class="single-card__item">
-                    {% include "includes/button.html" with type='subscribe' author=author %}
+                    {% include "includes/buttons/subscribe_button.html" with author=author %}
                 </li>
             </ul>
             <div class="single-card__section">

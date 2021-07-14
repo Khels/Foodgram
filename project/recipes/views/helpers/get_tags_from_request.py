@@ -7,7 +7,7 @@ def get_tags_from_request(request):
     '''
     if request.method == 'POST':
         tags = Tag.objects.filter(
-            slug__in=dict(request.POST).get('tags')
+            slug__in=dict(request.POST).get('tags', [])
         )
         return tags
     return []

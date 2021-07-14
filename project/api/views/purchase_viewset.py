@@ -1,6 +1,8 @@
 from cart.cart import CartIsEmpty
+from cart.models import Cart
+
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
+
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -16,7 +18,7 @@ class PurchaseViewset(viewsets.ViewSet):
         cart = request.cart
         try:
             cart.add(recipe_id)
-        except ObjectDoesNotExist:
+        except Cart.DoesNotExist:
             return Response({'success': False})
         return Response({'success': True})
 
@@ -24,6 +26,6 @@ class PurchaseViewset(viewsets.ViewSet):
         cart = request.cart
         try:
             cart.remove(pk)
-        except (ObjectDoesNotExist, CartIsEmpty):
+        except (Cart.DoesNotExist, CartIsEmpty):
             return Response({'success': False})
         return Response({'success': True})

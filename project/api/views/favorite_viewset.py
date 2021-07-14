@@ -1,6 +1,8 @@
 from api.serializers import FavoriteSerializer
+from recipes.models import Favorite
+
 from django.shortcuts import get_object_or_404
-from recipes.models import Favorite, Recipe
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -18,8 +20,7 @@ class FavoriteViewset(viewsets.ViewSet):
         return Response({'success': True})
 
     def destroy(self, request, pk):
-        recipe = get_object_or_404(Recipe, id=pk)
         favorite = get_object_or_404(
-            Favorite, user=request.user, recipe=recipe)
+            Favorite, user=request.user, recipe__id=pk)
         favorite.delete()
         return Response({'success': True})

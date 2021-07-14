@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
-from .helpers import get_paginator_and_page
+from recipes.views.helpers import get_paginator_and_page
 
 
 @cache_page(7)

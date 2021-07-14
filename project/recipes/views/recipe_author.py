@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, render
+
 from recipes.models import Recipe
 from recipes.views.helpers import (get_paginator_and_page,
                                    get_tags_and_checked_tags)

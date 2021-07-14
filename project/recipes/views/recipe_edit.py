@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+
 from recipes.forms import RecipeForm
-from recipes.models import Recipe, RecipeIngredient, Ingredient, recipe_ingredient
+from recipes.models import Recipe, RecipeIngredient
 from recipes.views.helpers import (check_slug, get_ingredients_from_request,
                                    get_tags_from_request, save_ingredients)
-from django.db.models import F
 
 
 @check_slug('recipe_edit')
 @login_required
-def recipe_edit(request, recipe_id, slug):
+def recipe_edit(request, recipe_id, slug=None):
     '''
     Renders the page with recipe edit form and
     saves edited/newly added ingredients separately.
@@ -20,6 +20,7 @@ def recipe_edit(request, recipe_id, slug):
     form = RecipeForm(
         request.POST or None,
         request.FILES or None,
+        author=request.user,
         instance=recipe,
     )
     if form.is_valid():
@@ -38,7 +39,7 @@ def recipe_edit(request, recipe_id, slug):
         ingredients = get_ingredients_from_request(request)
     return render(
         request,
-        'recipes/form_change_recipe.html',
+        'recipes/form_recipe.html',
         {'form': form, 'tags': tags, 'recipe': recipe,
          'ingredients': ingredients},
     )

@@ -1,6 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
-from ..models import Recipe, Tag
+from recipes.models import Recipe, Tag
 
 
 class RecipeForm(forms.ModelForm):
@@ -23,12 +24,11 @@ class RecipeForm(forms.ModelForm):
         self.author = kwargs.pop('author', None)
         super().__init__(*args, **kwargs)
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        name_field = 'name'
-        name = cleaned_data.get(name_field)
-        if name:
-            if Recipe.objects.filter(name=name, author=self.author).exists():
-                self.add_error(
-                    name_field, 'У вас уже есть рецепт с таким названием!')
-        return cleaned_data
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        recipes = Recipe.objects.filter(name=name, author=self.author)
+        for recipe in recipes:
+            if self.instance.name != recipe.name:
+                raise ValidationError(
+                    'У вас уже есть рецепт с таким названием!')
+        return name

@@ -1,7 +1,9 @@
 from api.serializers import FollowSerializer
+from recipes.models import Follow
+
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from recipes.models import Follow
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,8 +24,7 @@ class FollowViewset(viewsets.ViewSet):
         return Response({'success': True})
 
     def destroy(self, request, pk):
-        author = get_object_or_404(User, id=pk)
         follow = get_object_or_404(
-            Follow, author=author, subscriber=request.user)
+            Follow, author__id=pk, subscriber=request.user)
         follow.delete()
         return Response({'success': True})
