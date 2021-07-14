@@ -1,5 +1,4 @@
 from django.urls import include, path
-
 from recipes import views
 
 urlpatterns = [

@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.cache import cache_page
-
 from recipes.models import Recipe
 from recipes.views.helpers import check_slug
 

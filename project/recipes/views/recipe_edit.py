@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
-
 from recipes.forms import RecipeForm
 from recipes.models import Recipe, RecipeIngredient
 from recipes.views.helpers import (check_slug, get_ingredients_from_request,

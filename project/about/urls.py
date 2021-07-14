@@ -1,6 +1,5 @@
-from django.urls import path
-
 from about import views
+from django.urls import path
 
 urlpatterns = [
     path('author/', views.AboutAuthorView.as_view(), name='author'),
