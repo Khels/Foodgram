@@ -1,13 +1,14 @@
 import logging
 from io import BytesIO
 
-from cart import models
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from recipes.models import Recipe, RecipeIngredient
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
+
+from cart import models
+from recipes.models import Recipe, RecipeIngredient
 
 logger = logging.getLogger(__name__)
 

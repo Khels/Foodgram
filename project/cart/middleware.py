@@ -1,5 +1,6 @@
-from cart.cart import Cart
 from django.utils.deprecation import MiddlewareMixin
+
+from cart.cart import Cart
 
 
 class CartMiddleware(MiddlewareMixin):
