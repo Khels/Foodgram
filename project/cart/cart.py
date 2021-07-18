@@ -131,7 +131,7 @@ class Cart:
                     f'{rec_ingr.ingredient.dimension}', rec_ingr.amount]
         return converted
 
-    def convert_to_PDF(self):
+    def convert_to_pdf(self):
         x, y = 20, 40
         converted = self._convert_to_dict()
         buffer = BytesIO()

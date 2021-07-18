@@ -17,8 +17,10 @@
         <div class="single-card__info">
             <div class="single-card__header-info">
                 <h1 class="single-card__title">{{ recipe.name }}</h1>
-                {% include "includes/buttons/favorite_button.html" with recipe=recipe %}
-            </div>
+                <div class="single-card__favorite">
+                    {% include "includes/buttons/favorite_button.html" with recipe=recipe %}
+                </div>
+                </div>
             <ul class="single-card__items">
                 {% for tag in tags %}
                     <li class="single-card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span></li>
