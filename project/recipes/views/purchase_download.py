@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 
+from cart.cart import Cart
+
 
 def purchase_download(request):
     '''
@@ -8,6 +10,7 @@ def purchase_download(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
         'attachment; filename="shopping-list.pdf"')
-    pdf = request.cart.convert_to_pdf()
+    cart = Cart(request)
+    pdf = cart.convert_to_pdf()
     response.write(pdf)
     return response
