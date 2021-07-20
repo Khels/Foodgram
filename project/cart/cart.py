@@ -104,9 +104,9 @@ class Cart:
             else:
                 for recipe in old_cart.recipes.all():
                     cart_model.recipes.add(recipe)
-            # delete anonym's cart after you appended all items from it
-            # to the currently logged in user's cart
-            old_cart.delete()
+                # delete anonym's cart after you appended all items from it
+                # to the currently logged in user's cart
+                old_cart.delete()
 
     def count(self):
         return self.cart.recipes.count()
