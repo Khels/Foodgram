@@ -17,8 +17,8 @@ services:
         image: khelskelly/foodgram
         restart: unless-stopped
         volumes:
-            - static:/foodgram/static/
-            - media:/foodgram/media/
+            - static:/foodgram/project/static/
+            - media:/foodgram/project/media/
         expose:
             - '8000'
         depends_on:
