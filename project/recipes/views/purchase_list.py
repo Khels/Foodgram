@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from cart.cart import Cart
+
 
 def purchase_list(request):
     '''
@@ -9,6 +11,6 @@ def purchase_list(request):
         request,
         'recipes/shop_list.html',
         {
-            'cart': request.cart,
+            'cart': Cart(request),
         }
     )
