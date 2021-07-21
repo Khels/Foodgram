@@ -7,6 +7,6 @@ COPY requirements.txt .
 RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
 COPY . .
 CMD gunicorn project.wsgi:application --bind 0.0.0.0:8000 \
-    --error-logfile error.log \
-    --access-logfile access.log \
-    --capture-output --log-level debug
+    # --error-logfile error.log \
+    # --access-logfile access.log \
+    # --capture-output --log-level debug
