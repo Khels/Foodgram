@@ -1,5 +1,5 @@
-# yamdb_final
-![YaMDB workflow](https://github.com/Khels/foodgram-project-react/actions/workflows/main.yml/badge.svg)
+# Foodgram
+![Foodgram workflow](https://github.com/Khels/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 ### Описание
 Сайт Foodgram хранит рецепты от пользователей, которые можно фильтровать по тегам, добавлять в избранное и в список покупок.
 ### Технологии
