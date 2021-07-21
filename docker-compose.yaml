@@ -19,7 +19,7 @@ services:
         volumes:
             - static:/foodgram/static/
             - media:/foodgram/media/
-            - ./logs/gunicorn/:/foodgram/logs/
+            # - ./logs/gunicorn/:/foodgram/logs/
         expose:
             - '8000'
         depends_on:
