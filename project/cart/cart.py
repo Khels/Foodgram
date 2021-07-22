@@ -136,7 +136,9 @@ class Cart:
         converted = self._convert_to_dict()
         buffer = BytesIO()
         canvas = Canvas(buffer, bottomup=0)
-        pdfmetrics.registerFont(TTFont('FreeSans', 'FreeSans.ttf'))
+        pdfmetrics.registerFont(TTFont(
+            'FreeSans',
+            '/usr/share/fonts/truetype/freefont/FreeSans.ttf'))
         canvas.setFont('FreeSans', 28)
         canvas.drawString(x, y, 'Список покупок')
         for key, value in converted.items():
