@@ -1,12 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
 
 from recipes.views.helpers import get_paginator_and_page
 
 
-@cache_page(7)
 @login_required
 def subscription_list(request):
     '''

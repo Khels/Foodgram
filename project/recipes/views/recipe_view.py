@@ -1,11 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.cache import cache_page
 
 from recipes.models import Recipe
 from recipes.views.helpers import check_slug
 
 
-@cache_page(7)
 @check_slug('recipe_view')
 def recipe_view(request, recipe_id, slug=None):
     '''
