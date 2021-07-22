@@ -1,5 +1,3 @@
-from django.forms import ValidationError
-
 from recipes.models import Ingredient, RecipeIngredient
 
 NAME_INGR = 'nameIngredient_'
@@ -30,7 +28,7 @@ def save_ingredients(request, recipe):
                 rec_ingr.amount += int(ingredient_amount)
             rec_ingr.save()
             ingr_cnt += 1
-    if ingr_cnt == 0:
-        raise ValidationError(
-            'Вы должны добавить как минимум один ингредиент!'
-        )
+    # if ingr_cnt == 0:
+    #     raise ValidationError(
+    #         'Вы должны добавить как минимум один ингредиент!'
+    #     )
