@@ -3,6 +3,8 @@ from io import BytesIO
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
 
 from cart import models
@@ -134,7 +136,8 @@ class Cart:
         converted = self._convert_to_dict()
         buffer = BytesIO()
         canvas = Canvas(buffer, bottomup=0)
-        canvas.setFontSize(28)
+        pdfmetrics.registerFont(TTFont('DejaVuSans', 'DejaVuSans.ttf'))
+        canvas.setFont('DejaVuSans', 28)
         canvas.drawString(x, y, 'Список покупок')
         for key, value in converted.items():
             line = '• ' + key + ' (' + value[0] + ') — ' + str(value[1])
@@ -143,7 +146,7 @@ class Cart:
             if y >= 800:
                 y = 40
                 canvas.showPage()
-                canvas.setFontSize(28)
+                canvas.setFont('DejaVuSans', 28)
         canvas.save()
         pdf = buffer.getvalue()
         buffer.close()
