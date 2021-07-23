@@ -23,23 +23,40 @@ def recipe_edit(request, recipe_id, slug=None):
         author=request.user,
         instance=recipe,
     )
-    if form.is_valid():
-        recipe = form.save()
-        # delete old recipe's ingredients
-        RecipeIngredient.objects.filter(recipe=recipe).delete()
-        save_ingredients(request, recipe)  # save updated ingredients
-        recipe.save()
-        return redirect('recipe_view', recipe_id=recipe_id, slug=recipe.slug)
-    tags = recipe.tags.all()
-    rec_ingrs = recipe.recipe_ingredients.prefetch_related('ingredient')
-    ingredients = [
-        (rec_ingr.ingredient, rec_ingr.amount) for rec_ingr in rec_ingrs]
-    if request.method == 'POST':
+    if request.method == 'GET':
+        tags = recipe.tags.all()
+        rec_ingrs = recipe.recipe_ingredients.prefetch_related('ingredient')
+        ingredients = [
+            (rec_ingr.ingredient, rec_ingr.amount) for rec_ingr in rec_ingrs]
+        return render(
+            request,
+            'recipes/form_recipe.html',
+            {
+                'form': form,
+                'tags': tags,
+                'recipe': recipe,
+                'ingredients': ingredients,
+            },
+        )
+    elif request.method == 'POST':
         tags = get_tags_from_request(request)
         ingredients = get_ingredients_from_request(request)
-    return render(
-        request,
-        'recipes/form_recipe.html',
-        {'form': form, 'tags': tags, 'recipe': recipe,
-         'ingredients': ingredients},
-    )
+        if form.is_valid() and ingredients['error_code'] == 0:
+            recipe = form.save()
+            # delete old recipe's ingredients
+            RecipeIngredient.objects.filter(recipe=recipe).delete()
+            save_ingredients(recipe, ingredients['ingredients'])
+            recipe.save()
+            return redirect(
+                'recipe_view', recipe_id=recipe_id, slug=recipe.slug)
+        return render(
+            request,
+            'recipes/form_recipe.html',
+            {
+                'form': form,
+                'tags': tags,
+                'recipe': recipe,
+                'ingredients': ingredients['ingredients'],
+                'error_messages': ingredients['error_messages'],
+            },
+        )

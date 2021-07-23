@@ -14,17 +14,33 @@ def recipe_create(request):
     '''
     form = RecipeForm(
         request.POST or None, request.FILES or None, author=request.user)
-    if form.is_valid():
-        form.instance.author = request.user
-        recipe = form.save()
-        save_ingredients(request, recipe)
-        recipe.save()
-        return redirect('recipe_view', recipe_id=recipe.id, slug=recipe.slug)
-    # if the form is invalid do not lose tags and ingredients chosen by user
     tags = get_tags_from_request(request)
-    ingredients = get_ingredients_from_request(request)
-    return render(
-        request,
-        'recipes/form_recipe.html',
-        {'form': form, 'tags': tags, 'ingredients': ingredients},
-    )
+    if request.method == 'GET':
+        return render(
+            request,
+            'recipes/form_recipe.html',
+            {
+                'form': form,
+                'tags': tags,
+                'ingredients': [],
+            },
+        )
+    elif request.method == 'POST':
+        ingredients = get_ingredients_from_request(request)
+        if form.is_valid() and ingredients['error_code'] == 0:
+            form.instance.author = request.user
+            recipe = form.save()
+            save_ingredients(recipe, ingredients['ingredients'])
+            recipe.save()
+            return redirect(
+                'recipe_view', recipe_id=recipe.id, slug=recipe.slug)
+        return render(
+            request,
+            'recipes/form_recipe.html',
+            {
+                'form': form,
+                'tags': tags,
+                'ingredients': ingredients['ingredients'],
+                'error_messages': ingredients['error_messages'],
+            },
+        )
